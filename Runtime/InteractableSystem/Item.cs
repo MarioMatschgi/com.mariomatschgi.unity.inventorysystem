@@ -68,7 +68,7 @@ public class Item : Interactable
         // ToDo: Collect Item, add it to players inventory and check for complications
         Debug.Log("Try to collect item named: " + itemData.itemPreset.name);
 
-        itemData.itemAmount = _iInteractor.inventory.AddItem(this);
+        itemData.itemAmount = _iInteractor.inventoryUi.AddItem(this);
         if (itemData.itemAmount == 0)
             Destroy(gameObject);
     }

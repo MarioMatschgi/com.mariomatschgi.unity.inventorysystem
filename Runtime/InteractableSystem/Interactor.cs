@@ -6,7 +6,6 @@ public interface IInteractor
 {
     int interactorId { get; set; }
 
-    PlayerInventory inventory { get; }
     PlayerInventoryUi inventoryUi { get; set; }
 
     //void Test();

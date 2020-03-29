@@ -8,7 +8,20 @@ public class InventoryUi : MonoBehaviour
 {
     [Header("General")]
     public InventoryUiSlot[] slots;
-    public ItwItemData[][] items;
+    ItwItemData[][] m_items;
+    public ItwItemData[][] items
+    {
+        get
+        {
+            return m_items;
+        }
+        set
+        {
+            m_items = value;
+
+            UpdateSlots();
+        }
+    }
     [Space]
     public bool isActive;
     [Space]
@@ -34,7 +47,11 @@ public class InventoryUi : MonoBehaviour
         // Setup variables
         spaceX = _spaceX;
         spaceY = _spaceY;
-        items = _items;
+
+        items = new ItwItemData[_spaceY][];
+        for (int i = 0; i < items.Length; i++)
+            items[i] = new ItwItemData[_spaceX];
+        //items = _items;
         gridLayout = GetComponent<GridLayoutGroup>();
 
         // Setup grid constraint
@@ -72,10 +89,11 @@ public class InventoryUi : MonoBehaviour
      *  
      */
 
-    public void UpdateSlots(ItwItemData[][] _items)
+    public void UpdateSlots(ItwItemData[][] _items = null)
     {
-        // Update variables
-        items = _items;
+        // Update variables if no new get updated
+        if (_items != null)
+            items = _items;
 
         // Update each Slot
         for (int i = 0; i < slots.Length; i++)

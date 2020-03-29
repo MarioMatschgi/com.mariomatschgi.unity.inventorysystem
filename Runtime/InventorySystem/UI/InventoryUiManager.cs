@@ -54,6 +54,7 @@ public class InventoryUiManager : MonoBehaviour
 
     void OnSlotSelected(InventoryUiSlot _selectedSlot, PointerEventData.InputButton _button)
     {
+        // Manage Swaping/Stacking
         switch (_button)
         {
             case PointerEventData.InputButton.Left:
@@ -72,7 +73,6 @@ public class InventoryUiManager : MonoBehaviour
                     cursorItemSlot.inventoryUi = _selectedSlot.inventoryUi;
                     cursorItemSlot.itemPos = _selectedSlot.itemPos;
                     SwapSlotItems(cursorItemSlot, _selectedSlot);
-                    Debug.Log("AAA");
                 }
                 // Else its the second click
                 else
@@ -81,7 +81,6 @@ public class InventoryUiManager : MonoBehaviour
                     if (_selectedSlot.itemData == null)
                     {
                         // Put cursor item there
-                        Debug.Log("SSS: " + _selectedSlot.gameObject.name);
                         SwapSlotItems(cursorItemSlot, _selectedSlot);
                         cursorItemSlot.itemPos = _selectedSlot.itemPos;
 
