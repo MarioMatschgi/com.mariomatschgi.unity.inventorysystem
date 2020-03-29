@@ -6,6 +6,7 @@
   "unity": "2019.1",
   "dependencies": {
     "com.mariomatschgi.unity.core": "https://github.com/MarioMatschgi/com.mariomatschgi.unity.core.git",
+    "com.mariomatschgi.unity.uilibrary": "https://github.com/MarioMatschgi/com.mariomatschgi.unity.uilibrary.git",
     "com.unity.textmeshpro": "2.0.0"
   },
   "author": {
