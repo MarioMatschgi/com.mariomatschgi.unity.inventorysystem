@@ -44,39 +44,28 @@ public class InventoryUiInspectionWindow : EditorWindow
     }
     static void Setup()
     {
-        // If a InventoryUiInspectionWindow is open, close it
-        if (window != null)
-            window.Close();
-
         // Create the window
         window = GetWindow<InventoryUiInspectionWindow>();
         window.titleContent = new GUIContent("InventoryUi content viewer");
 
-        // Show the window
-        window.Show();
+        // Set size
         RectOffset _defaultMargin = EditorStyles.inspectorDefaultMargins.padding;
-
         if (inventoryUi.spaceY <= 0 || inventoryUi.spaceX <= 0)
             window.minSize = emptyInvSize;
         else
             window.minSize = new Vector2(inventoryUi.spaceX * (slotSize.x + slotMargin + _defaultMargin.horizontal),
-                inventoryUi.spaceY * (slotSize.y + slotMargin + _defaultMargin.vertical) + 4 * _defaultMargin.vertical);
+                inventoryUi.spaceY * (slotSize.y + slotMargin + _defaultMargin.vertical) + 4 * _defaultMargin.vertical + Mathf.Max(EditorStyles.boldLabel.lineHeight, EditorStyles.label.lineHeight));
         window.maxSize = window.minSize;
 
         window.minSize = emptyInvSize;
         window.maxSize = Vector2.positiveInfinity;
     }
 
-    #endregion
-
-    #region Gameplay Methodes
-    /*
-     *
-     * 
-     *  Gameplay Methodes
-     *
-     *  
-     */
+    void Update()
+    {
+        // Force window to repaint
+        Repaint();
+    }
 
     void OnGUI()
     {
@@ -90,6 +79,11 @@ public class InventoryUiInspectionWindow : EditorWindow
             return;
         }
 
+        // Draw Inventory Label
+        EditorGUILayout.BeginHorizontal("Box");
+        GUILayout.Label("Current inventory:", EditorStyles.boldLabel);
+        GUILayout.Label(inventoryUi.gameObject.name, EditorStyles.label);
+        EditorGUILayout.EndHorizontal();
 
         // Draw Error Label and return
         if (inventoryUi.spaceY <= 0 || inventoryUi.spaceX <= 0)
@@ -112,10 +106,10 @@ public class InventoryUiInspectionWindow : EditorWindow
         }
 
         GUILayout.FlexibleSpace();
+        verticalScrollPos = EditorGUILayout.BeginScrollView(verticalScrollPos);
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         EditorGUILayout.BeginVertical();
-        verticalScrollPos = EditorGUILayout.BeginScrollView(verticalScrollPos);
 
         int _row = 0;
         foreach (ItwItemData[] _itemDataList in _cachedDatas)
@@ -162,12 +156,23 @@ public class InventoryUiInspectionWindow : EditorWindow
                 EditorGUILayout.Space(slotMargin);
         }
 
-        EditorGUILayout.EndScrollView();
         EditorGUILayout.EndVertical();
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndScrollView();
         GUILayout.FlexibleSpace();
     }
+
+    #endregion
+
+    #region Gameplay Methodes
+    /*
+     *
+     * 
+     *  Gameplay Methodes
+     *
+     *  
+     */
 
     #endregion
 
