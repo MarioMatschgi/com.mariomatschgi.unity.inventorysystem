@@ -8,20 +8,7 @@ public class InventoryUi : MonoBehaviour
 {
     [Header("General")]
     public InventoryUiSlot[] slots;
-    ItwItemData[][] m_items;
-    public ItwItemData[][] items
-    {
-        get
-        {
-            return m_items;
-        }
-        set
-        {
-            m_items = value;
-
-            UpdateSlots();
-        }
-    }
+    public ItwItemData[][] items;
     [Space]
     public bool isActive;
     [Space]
