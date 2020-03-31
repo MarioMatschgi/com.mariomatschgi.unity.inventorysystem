@@ -64,14 +64,7 @@ public class InventoryUiSlot : MonoBehaviour, IPointerClickHandler
 
         // Update item in inventoryUi
         if (inventoryUi != null && inventoryUi.items != null)
-        {
-            string _a = "null";
-            if (itemData != null && itemData.itemPreset != null)
-                _a = itemData.itemPreset.name;
-            Debug.Log("PG: " + inventoryUi.transform.parent.gameObject.name + " G: " + inventoryUi.gameObject.name + " S: " + gameObject.name + " D: " + _a);
-
             inventoryUi.items[itemPos.y][itemPos.x] = itemData;
-        }
 
         // If the item is null, reset Slot
         if (itemData == null)

@@ -70,9 +70,8 @@ public class InventoryUiManager : MonoBehaviour
                     // Set firstSelectedSlot to selectedSlot
                     firstSelectedSlot = _selectedSlot;
                     // Move item to cursor
-                    cursorItemSlot.inventoryUi = _selectedSlot.inventoryUi;
                     cursorItemSlot.itemPos = _selectedSlot.itemPos;
-                    SwapSlotItems(cursorItemSlot, _selectedSlot);
+                    SwapSlotItems(_selectedSlot, cursorItemSlot);
                 }
                 // Else its the second click
                 else
@@ -81,8 +80,8 @@ public class InventoryUiManager : MonoBehaviour
                     if (_selectedSlot.itemData == null)
                     {
                         // Put cursor item there
-                        SwapSlotItems(cursorItemSlot, _selectedSlot);
                         cursorItemSlot.itemPos = _selectedSlot.itemPos;
+                        SwapSlotItems(_selectedSlot, cursorItemSlot);
 
                         // Reset firstSelectedSlot
                         firstSelectedSlot = null;
@@ -98,7 +97,7 @@ public class InventoryUiManager : MonoBehaviour
                         {
                             // Put cursor item there
                             cursorItemSlot.itemPos = _selectedSlot.itemPos;
-                            SwapSlotItems(cursorItemSlot, _selectedSlot);
+                            SwapSlotItems(_selectedSlot, cursorItemSlot);
 
                             // Set firstSelectedSlot and secondSelectedSlot
                             firstSelectedSlot = _selectedSlot;
@@ -137,7 +136,7 @@ public class InventoryUiManager : MonoBehaviour
                 else
                 {
                     // Try to stack 1 item from cursor to selectedSlot
-                    StackSlotItems(cursorItemSlot, _selectedSlot, 1);
+                    StackSlotItems(_selectedSlot, cursorItemSlot, 1);
 
                     // If cursor is empty, reset
                     if (cursorItemSlot.itemData != null && cursorItemSlot.itemData.itemAmount <= 0)
