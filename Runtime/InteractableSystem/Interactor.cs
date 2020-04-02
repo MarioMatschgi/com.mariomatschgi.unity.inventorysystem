@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractor
+namespace MM
 {
-    int interactorId { get; set; }
+    namespace Libraries
+    {
+        namespace InventorySystem
+        {
+            public interface IInteractor
+            {
+                int interactorId { get; set; }
 
-    PlayerInventoryUi inventoryUi { get; set; }
-
-    //void Test();
+                PlayerInventoryUi inventoryUi { get; set; }
+            }
+        }
+    }
 }
-
-//public static class IInteractorExtention
-//{
-//    public static void Test(this IInteractor _interactor)
-//    {
-//        Debug.Log("Test");
-//    }
-//}
