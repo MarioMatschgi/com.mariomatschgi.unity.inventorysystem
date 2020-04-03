@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,11 +15,18 @@ namespace MM
             public class InventoryUiManager : MonoBehaviour
             {
                 [Header("General")]
+                public bool forceDisableInvSetup;
+                public bool setupInteractorInventoriesDynamic = true;
+                public int startInteractorInventories;
+                [Space]
                 public InventoryUiSlot firstSelectedSlot;
                 //public InventoryUiSlot secondSelectedSlot;
 
                 [Header("Outlets")]
                 public InventoryUiSlot cursorItemSlot;
+
+                [Header("Prefabs")]
+                public GameObject playerInventoryUiPrefab;
 
 
                 public delegate void OnSlotSelectedEvent(InventoryUiSlot _selectedSlot, PointerEventData.InputButton _button);
@@ -72,6 +80,9 @@ namespace MM
                     cursorItemSlot.gameObject.SetActive(false);
                     // Reset cursorItemSlot
                     cursorItemSlot.UpdateSlot(null);
+
+                    // Setup InteractorInventories
+                    SetupInteractorInventories();
                 }
 
                 void Start()
@@ -256,6 +267,45 @@ namespace MM
                  *  Helper Methodes
                  * 
                  */
+
+                void SetupInteractorInventories()
+                {
+                    // If forced, return
+                    if (forceDisableInvSetup)
+                        return;
+
+                    int _amt = startInteractorInventories;
+                    if (setupInteractorInventoriesDynamic)
+                        _amt = FindObjectsOfType<MonoBehaviour>().OfType<IInteractor>().Count();
+
+                    for (int i = 0; i < transform.childCount; i++)
+                    {
+                        // Get Child
+                        Transform _transform = transform.GetChild(i);
+                        if (_transform.GetComponent<PlayerInventoryUi>() == null)
+                            continue;
+
+                        // If no Invs are left, destroy all next
+                        if (_amt <= 0)
+                            Destroy(_transform.gameObject);
+
+                        // Decrease amount left
+                        _amt--;
+                    }
+
+                    // If amount is smaller than 0, all Invs were inited, so return
+                    if (_amt < 0)
+                        return;
+
+                    // Else create new Invs
+                    for (int i = 0; i < Mathf.Abs(_amt); i++)
+                    {
+                        // Create
+                        GameObject _invGO = Instantiate(playerInventoryUiPrefab, transform);
+                        _invGO.gameObject.name = "PlayerInventoryPanel";
+                        _invGO.transform.SetSiblingIndex(0);
+                    }
+                }
 
                 void ResetCursor()
                 {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1436815092258360278}
   - component: {fileID: 1436815092258360273}
   m_Layer: 5
-  m_Name: InventoryCanvas
+  m_Name: InventoryUiManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,8 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695afa62d37a34bac8cbd3e62857d7e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setupInteractorInventoriesDynamic: 1
+  startInteractorInventories: 0
   firstSelectedSlot: {fileID: 0}
   cursorItemSlot: {fileID: 2370664467620629317}
+  playerInventoryUiPrefab: {fileID: 3939800310595310858, guid: dff0c4bb677414b3e9dafa1d8f095f5d,
+    type: 3}
 --- !u!223 &1436815092258360279
 Canvas:
   m_ObjectHideFlags: 0
