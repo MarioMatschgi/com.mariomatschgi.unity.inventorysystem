@@ -3,7 +3,7 @@
 namespace MM.Systems.InventorySystem
 {
     [System.Serializable]
-    [CreateAssetMenu(fileName = "New Item data", menuName = "ScriptableObjects/MM InventorySystem/ItemPreset")]
+    [CreateAssetMenu(fileName = "New Item data", menuName = "ScriptableObjects/MM InventorySystem/ItemPreset", order = 0)]
     public class ItemPreset : ScriptableObject
     {
         [Header("ItemPreset")]
