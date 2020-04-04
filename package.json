@@ -1,6 +1,6 @@
 {
   "name": "com.mariomatschgi.unity.inventorysystem",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "MM Inventory System",
   "description": "Mario Elsnig's Invenotry System. Used for managing inventories",
   "unity": "2019.1",

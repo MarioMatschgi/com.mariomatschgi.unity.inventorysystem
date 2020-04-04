@@ -3,3 +3,5 @@
 # Changelog
 Version 1.0.0:
 	Set up the foundation for inventory based on InTheWild
+Version 1.0.1:
+	Refined and refactored
