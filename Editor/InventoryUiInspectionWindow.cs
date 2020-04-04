@@ -175,21 +175,19 @@ namespace MM.Systems.InventorySystem
 
         #region Gameplay Methodes
         /*
-            *
-            * 
-            *  Gameplay Methodes
-            *
-            *  
-            */
+         *
+         *  Gameplay Methodes
+         *
+         */
 
         #endregion
 
         #region Helper Methodes
         /*
-            *
-            *  Helper Methodes
-            * 
-            */
+         *
+         *  Helper Methodes
+         * 
+         */
 
         #endregion
     }

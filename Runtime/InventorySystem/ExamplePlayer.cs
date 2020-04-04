@@ -64,10 +64,8 @@ namespace MM.Systems.InventorySystem
         #region Gameplay Methodes
         /*
          *
-         * 
          *  Gameplay Methodes
          *
-         *  
          */
 
         #endregion

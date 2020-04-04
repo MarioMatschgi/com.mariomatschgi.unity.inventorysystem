@@ -207,10 +207,8 @@ namespace MM.Systems.InventorySystem
         #region Gameplay Methodes
         /*
          *
-         * 
          *  Gameplay Methodes
          *
-         *  
          */
 
         /// <summary>
@@ -250,7 +248,7 @@ namespace MM.Systems.InventorySystem
              * 1. The amount possible to stack on the second slot (stackSize)
              * 2. The maxAmount
              * 3. The amount possible to stack (first slot amount)
-            */
+             */
             int _amount = Mathf.Min(_firstSlot.itemData.itemPreset.stackSize - (_secondSlot.itemData == null ? 0 : _secondSlot.itemData.itemAmount),
                 _maxAmount, _firstSlot.itemData.itemAmount);
             //int _amount = Mathf.Min(_firstSlot.itemData.itemPreset.stackSize, _maxAmount, _firstSlot.itemData.itemAmount, _secondSlot.itemData.itemAmount);
