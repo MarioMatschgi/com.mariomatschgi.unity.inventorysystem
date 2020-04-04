@@ -1,48 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace MM
+namespace MM.Systems.InventorySystem
 {
-    namespace Libraries
+    [System.Serializable]
+    [CreateAssetMenu(fileName = "New Item data", menuName = "ScriptableObjects/ItwItemPreset")]
+    public class ItemPreset : ScriptableObject
     {
-        namespace InventorySystem
+        [Header("ItemPreset")]
+        public new string name = "New Item";
+        public string description = "This is a new Item";
+        [Space]
+        public Sprite sprite;
+        public int stackSize = 1;
+    }
+
+    [System.Serializable]
+    public class ItemData
+    {
+        [Header("ItemData")]
+        public ItemPreset itemPreset;
+        public int itemAmount;
+
+        /// <summary>
+        /// Constructor for ItemData with a preset <paramref name="_itemPreset"/> and an amount <paramref name="_itemAmount"/>
+        /// </summary>
+        /// <param name="_itemPreset"></param>
+        /// <param name="_itemAmount"></param>
+        public ItemData(ItemPreset _itemPreset, int _itemAmount)
         {
-            [System.Serializable]
-            [CreateAssetMenu(fileName = "New Item data", menuName = "ScriptableObjects/ItwItemPreset")]
-            public class ItemPreset : ScriptableObject
-            {
-                [Header("ItemPreset")]
-                public new string name = "New Item";
-                public string description = "This is a new Item";
-                [Space]
-                public Sprite sprite;
-                public int stackSize = 1;
-            }
+            itemPreset = _itemPreset;
+            itemAmount = _itemAmount;
+        }
 
-            [System.Serializable]
-            public class ItwItemData
-            {
-                [Header("ItemData")]
-                public ItemPreset itemPreset;
-                public int itemAmount;
-
-                public ItwItemData(ItemPreset _itemPreset, int _itemAmount)
-                {
-                    itemPreset = _itemPreset;
-                    itemAmount = _itemAmount;
-                }
-
-                public override bool Equals(object obj)
-                {
-                    // If both itemPresets are equal, return true
-                    return (((ItwItemData)obj).itemPreset == itemPreset);
-                }
-                public override int GetHashCode()
-                {
-                    return base.GetHashCode();
-                }
-            }
+        public override bool Equals(object obj)
+        {
+            // If both itemPresets are equal, return true
+            return (((ItemData)obj).itemPreset == itemPreset);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

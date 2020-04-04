@@ -1,19 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace MM
+﻿namespace MM.Systems.InventorySystem
 {
-    namespace Libraries
+    public interface IInteractor
     {
-        namespace InventorySystem
-        {
-            public interface IInteractor
-            {
-                int interactorId { get; set; }
+        int interactorId { get; set; }
 
-                PlayerInventoryUi inventoryUi { get; set; }
-            }
-        }
+        InteractorInventoryUi inventoryUi { get; set; }
     }
 }
