@@ -21,13 +21,13 @@ namespace MM.Systems.InventorySystem
 
         }
 
-        void OnTriggerEnter(Collider _other)
+        protected virtual void OnTriggerEnter(Collider _other)
         {
             // Call OnInteract
             OnInteract(_other.transform);
         }
 
-        void OnTriggerEnter2D(Collider2D _other)
+        protected virtual void OnTriggerEnter2D(Collider2D _other)
         {
             // Call OnInteract
             OnInteract(_other.transform);
