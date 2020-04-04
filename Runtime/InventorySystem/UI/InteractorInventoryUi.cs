@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
+using MM.Libraries.UI;
 
 namespace MM.Systems.InventorySystem
 {
