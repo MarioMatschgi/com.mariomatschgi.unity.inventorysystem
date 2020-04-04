@@ -15,7 +15,6 @@ namespace MM.Systems.InventorySystem
     }
 
     [System.Serializable]
-    [CreateAssetMenu(fileName = "New Item data", menuName = "ScriptableObjects/MM InventorySystem/ItemData")]
     public class ItemData
     {
         [Header("ItemData")]
