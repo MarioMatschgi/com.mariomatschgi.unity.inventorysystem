@@ -171,10 +171,10 @@ namespace MM.Systems.InventorySystem
                     else
                     {
                         // Try to stack 1 item from cursor to selectedSlot
-                        StackSlotItems(_selectedSlot, cursorItemSlot, 1);
+                        StackSlotItems(cursorItemSlot, _selectedSlot, 1);
 
                         // If cursor is empty, reset
-                        if (cursorItemSlot.itemData != null && cursorItemSlot.itemData.itemAmount <= 0)
+                        if (cursorItemSlot.itemData == null || cursorItemSlot.itemData.itemAmount <= 0)
                             ResetCursor();
                     }
 
