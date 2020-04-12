@@ -129,10 +129,13 @@ namespace MM.Systems.InventorySystem
                 //Debug.Log("Updating Slot: " + slots[i].name + " with item: " + (_item == null ? "null" : _item.name));
             }
 
-            interactorInv.hasNotChangedInv = true;
             if (interactorInv != null)
+            {
+                interactorInv.hasNotChangedInv = true;
+
                 if (interactorInv.inventoryChangedCallback != null)
                     interactorInv.inventoryChangedCallback.Invoke();
+            }
         }
 
         #endregion
