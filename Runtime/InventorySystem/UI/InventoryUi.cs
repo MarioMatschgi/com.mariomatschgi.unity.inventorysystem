@@ -113,8 +113,6 @@ namespace MM.Systems.InventorySystem
         /// <param name="_items"></param>
         public void UpdateSlots(ItemData[][] _items = null)
         {
-            bool _hasChanged = _items == null ? (items == null ? false : true) : (!_items.Equals(items) && _items != items);
-
             // Update variables if no new get updated
             if (_items != null)
                 items = _items;
@@ -129,14 +127,6 @@ namespace MM.Systems.InventorySystem
                 slots[i].inventoryUi = this;
                 slots[i].UpdateSlot(_itemData);
                 //Debug.Log("Updating Slot: " + slots[i].name + " with item: " + (_item == null ? "null" : _item.name));
-            }
-
-            if (_hasChanged && interactorInv != null)
-            {
-                interactorInv.hasNotChangedInv = true;
-
-                if (interactorInv.inventoryChangedCallback != null)
-                    interactorInv.inventoryChangedCallback.Invoke();
             }
         }
 
