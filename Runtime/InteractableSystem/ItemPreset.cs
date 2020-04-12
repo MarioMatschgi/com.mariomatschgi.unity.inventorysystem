@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace MM.Systems.InventorySystem
 {
@@ -34,6 +34,14 @@ namespace MM.Systems.InventorySystem
 
         public override bool Equals(object obj)
         {
+            if (((ItemData)obj) == null)
+            {
+                if (itemPreset == null)
+                    return true;
+                else
+                    return false;
+            }
+
             // If both itemPresets are equal, return true
             return (((ItemData)obj).itemPreset == itemPreset);
         }
