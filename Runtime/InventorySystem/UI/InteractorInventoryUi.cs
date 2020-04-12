@@ -299,11 +299,20 @@ namespace MM.Systems.InventorySystem
             isFinishedAnimating = true;
         }
 
+        [HideInInspector]
+        public bool hasNotChangedInv;
         /// <summary>
         /// Updates the InteractorInventory
         /// </summary>
         void UpdateInventory()
         {
+            if (hasNotChangedInv)
+            {
+                hasNotChangedInv = false;
+
+                return;
+            }
+
             // Update hotbarInventory
             hotbarInventory.UpdateSlots();
             // Update mainInventory
