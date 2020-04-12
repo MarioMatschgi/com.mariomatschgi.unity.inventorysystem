@@ -113,7 +113,7 @@ namespace MM.Systems.InventorySystem
         /// <param name="_items"></param>
         public void UpdateSlots(ItemData[][] _items = null)
         {
-            bool _hasChanged = _items == null ? (items == null ? false : true) : (!_items.Equals(items) && _items == items);
+            bool _hasChanged = _items == null ? (items == null ? false : true) : (!_items.Equals(items) && _items != items);
 
             // Update variables if no new get updated
             if (_items != null)
