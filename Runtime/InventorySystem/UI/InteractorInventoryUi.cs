@@ -106,14 +106,14 @@ namespace MM.Systems.InventorySystem
             inventoryChangedCallback += UpdateInventory;
 
             // Setup hotbarInventory
-            hotbarInventory.Setup(inventorySpaceX, 1);
+            hotbarInventory.Setup(inventorySpaceX, 1, this);
             hotbarInventory.isActive = false;
             // Setup mainInventory
-            mainInventory.Setup(inventorySpaceX, inventorySpaceY);
+            mainInventory.Setup(inventorySpaceX, inventorySpaceY, this);
             // Setup armorInventory
-            armorInventory.Setup(armorSpaceX, armorSpaceY);
+            armorInventory.Setup(armorSpaceX, armorSpaceY, this);
             // Setup ringInventory
-            ringInventory.Setup(ringSpaceX, ringSpaceY);
+            ringInventory.Setup(ringSpaceX, ringSpaceY, this);
 
             // Hide inventory
             content.alpha = 0;
@@ -306,7 +306,7 @@ namespace MM.Systems.InventorySystem
         {
             // Update hotbarInventory
             hotbarInventory.UpdateSlots();
-            // Setup mainInventory
+            // Update mainInventory
             mainInventory.UpdateSlots();
             // Update armorInventory
             armorInventory.UpdateSlots();

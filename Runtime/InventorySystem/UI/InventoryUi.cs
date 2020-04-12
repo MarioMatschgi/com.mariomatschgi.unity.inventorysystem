@@ -15,6 +15,8 @@ namespace MM.Systems.InventorySystem
         [Space]
         public int spaceX;
         public int spaceY;
+        [Space]
+        InteractorInventoryUi interactorInv;
 
         [Header("Prefabs")]
         public GameObject slotPrefab;
@@ -59,11 +61,12 @@ namespace MM.Systems.InventorySystem
         /// </summary>
         /// <param name="_spaceX"></param>
         /// <param name="_spaceY"></param>
-        public void Setup(int _spaceX, int _spaceY)
+        public void Setup(int _spaceX, int _spaceY, InteractorInventoryUi _interactorInv = null)
         {
             // Setup variables
             spaceX = _spaceX;
             spaceY = _spaceY;
+            interactorInv = _interactorInv;
 
             items = new ItemData[_spaceY][];
             for (int i = 0; i < items.Length; i++)
@@ -125,6 +128,10 @@ namespace MM.Systems.InventorySystem
                 slots[i].UpdateSlot(_itemData);
                 //Debug.Log("Updating Slot: " + slots[i].name + " with item: " + (_item == null ? "null" : _item.name));
             }
+
+            if (interactorInv != null)
+                if (interactorInv.inventoryChangedCallback != null)
+                    interactorInv.inventoryChangedCallback.Invoke();
         }
 
         #endregion
