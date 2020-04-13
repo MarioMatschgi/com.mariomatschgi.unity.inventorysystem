@@ -6,7 +6,7 @@ using MM.Libraries.UI;
 namespace MM.Systems.InventorySystem
 {
     [AddComponentMenu("MM InventorySystem/Player Inventory UI")]
-    [DefaultExecutionOrder(-100)]
+    [DefaultExecutionOrder(-5)]
     public class InteractorInventoryUi : MonoBehaviour
     {
         // Public
