@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using MM.Libraries.UI;
@@ -6,6 +6,7 @@ using MM.Libraries.UI;
 namespace MM.Systems.InventorySystem
 {
     [AddComponentMenu("MM InventorySystem/Player Inventory UI")]
+    [DefaultExecutionOrder(-100)]
     public class InteractorInventoryUi : MonoBehaviour
     {
         // Public
