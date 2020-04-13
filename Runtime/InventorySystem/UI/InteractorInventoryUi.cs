@@ -91,7 +91,7 @@ namespace MM.Systems.InventorySystem
         }
 #endif
 
-        void Awake()
+        protected virtual void Awake()
         {
             // Setup variables
             IEnumerable _enumerable = FindObjectsOfType<MonoBehaviour>().OfType<IInteractor>();
@@ -120,12 +120,12 @@ namespace MM.Systems.InventorySystem
             content.alpha = 0;
         }
 
-        void Start()
+        protected virtual void Start()
         {
 
         }
 
-        void Update()
+        protected virtual void Update()
         {
             // Limit selectedRowIdx
             if (hotbarRowIdx >= inventorySpaceY)
@@ -155,7 +155,7 @@ namespace MM.Systems.InventorySystem
         /// </summary>
         /// <param name="_newItem"></param>
         /// <returns>Returns the new item amount</returns>
-        public int AddItem(Item _newItem)
+        public virtual int AddItem(Item _newItem)
         {
             bool _wasInventoryChanged = false;
             int _newAmt = _newItem.itemData.itemAmount;
@@ -211,7 +211,7 @@ namespace MM.Systems.InventorySystem
         /// </summary>
         /// <param name="_removeItem"></param>
         /// <returns>True if removing was successful</returns>
-        public bool RemoveItem(Item _removeItem)
+        public virtual bool RemoveItem(Item _removeItem)
         {
             // ToDo: Remove the item
 
@@ -225,7 +225,7 @@ namespace MM.Systems.InventorySystem
         /// Updates the inventorys visibility, Opens/Closes the Inventory
         /// </summary>
         /// <param name="_shouldOpen"></param>
-        public void UpdateInventoryVisibility(bool _shouldOpen)
+        public virtual void UpdateInventoryVisibility(bool _shouldOpen)
         {
             if (!isFinishedAnimating)
                 return;
@@ -250,7 +250,7 @@ namespace MM.Systems.InventorySystem
         /// Corroutine for opening the Inventory
         /// </summary>
         /// <returns></returns>
-        IEnumerator OpenInventory()
+        protected virtual IEnumerator OpenInventory()
         {
             // Set isFinishedAnimating
             isFinishedAnimating = false;
@@ -277,7 +277,7 @@ namespace MM.Systems.InventorySystem
         /// Corroutine for closing the Inventory
         /// </summary>
         /// <returns></returns>
-        IEnumerator CloseInventory()
+        protected virtual IEnumerator CloseInventory()
         {
             // Set isFinishedAnimating
             isFinishedAnimating = false;
@@ -305,7 +305,7 @@ namespace MM.Systems.InventorySystem
         /// <summary>
         /// Updates the InteractorInventory
         /// </summary>
-        void UpdateInventory()
+        protected virtual void UpdateInventory()
         {
             if (hasNotChangedInv)
             {
@@ -328,7 +328,7 @@ namespace MM.Systems.InventorySystem
         /// Sets the Inventorys active if <paramref name="_active"/>
         /// </summary>
         /// <param name="_active"></param>
-        void SetInventoriesActive(bool _active)
+        protected virtual void SetInventoriesActive(bool _active)
         {
             mainInventory.isActive = _active;
             armorInventory.isActive = _active;
