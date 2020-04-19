@@ -100,7 +100,14 @@ namespace MM.Systems.InventorySystem
             if (logTryCollect)
                 Debug.Log("Try to collect item named: " + itemData.itemPreset.name);
 
-            itemData.itemAmount = _iInteractor.inventoryUi.AddItem(this);
+
+
+            Debug.Log("A: " + gameObject.name + " : " + (itemData.itemPreset is RingItemPreset));
+
+
+
+
+            itemData.itemAmount = _iInteractor.inventoryUi.AddItem(itemData);
             if (itemData.itemAmount == 0)
                 Destroy(gameObject);
         }

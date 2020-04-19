@@ -151,25 +151,40 @@ namespace MM.Systems.InventorySystem
          */
 
         /// <summary>
-        /// Adds an item <paramref name="_newItem"/> to the list
+        /// Adds an item <paramref name="_newItemData"/> to the list
         /// </summary>
-        /// <param name="_newItem"></param>
+        /// <param name="_newItemData"></param>
         /// <returns>Returns the new item amount</returns>
-        public virtual int AddItem(Item _newItem)
+        public virtual int AddItem(ItemData _newItemData, bool _forceMainInv = false)
         {
             bool _wasInventoryChanged = false;
-            int _newAmt = _newItem.itemData.itemAmount;
+            int _newAmt = _newItemData.itemAmount;
 
-            for (int i = 0; i < mainInventory.items.Length; i++)
+            // Set inventory
+            InventoryUi _inv = mainInventory;
+            if (!_forceMainInv)
             {
-                ItemData[] _subList = mainInventory.items[i];
+                if (_newItemData.itemPreset is RingItemPreset)
+                    _inv = ringInventory;
+                if (_newItemData.itemPreset is ArmorItemPreset)
+                    _inv = armorInventory;
+            }
+
+            if (_inv.items == null)
+                _inv.items = new ItemData[_inv.spaceY][];
+
+            for (int i = 0; i < _inv.items.Length; i++)
+            {
+                ItemData[] _subList = _inv.items[i];
+                if (_subList == null)
+                    _subList = new ItemData[_inv.spaceX];
 
                 // Try to stack onto any item
-                for (int j = 0; j < mainInventory.items.Length; j++)
+                for (int j = 0; j < _subList.Length; j++)
                 {
                     ItemData _itemData = _subList[j];
 
-                    if (_itemData != null && _itemData.Equals(_newItem.itemData))
+                    if (_itemData != null && _itemData.Equals(_newItemData))
                     {
                         int _min = Mathf.Min(Mathf.Abs(_itemData.itemPreset.stackSize - _itemData.itemAmount), _newAmt);
                         _itemData.itemAmount += _min;
@@ -185,7 +200,7 @@ namespace MM.Systems.InventorySystem
                         for (int j = 0; j < _subList.Length; j++)
                             if (_subList[j] == null)
                             {
-                                _subList[j] = new ItemData(_newItem.itemData.itemPreset, _newAmt);
+                                _subList[j] = new ItemData(_newItemData.itemPreset, _newAmt);
 
                                 _newAmt = 0;
 
@@ -195,12 +210,19 @@ namespace MM.Systems.InventorySystem
                                 break;
                             }
             }
-            mainInventory.UpdateSlots();
+            // Only recurse if its not already recursed and inv has not changed
+            if (!_forceMainInv && !_wasInventoryChanged)
+                AddItem(_newItemData, true);
 
-            // Invoke inventoryChangedCallback
             if (_wasInventoryChanged)
+            {
+                // Update Slots
+                _inv.UpdateSlots();
+
+                // Invoke inventoryChangedCallback
                 if (inventoryChangedCallback != null)
                     inventoryChangedCallback.Invoke();
+            }
 
             // Return items new amount
             return _newAmt;
@@ -211,11 +233,9 @@ namespace MM.Systems.InventorySystem
         /// </summary>
         /// <param name="_removeItem"></param>
         /// <returns>True if removing was successful</returns>
-        public virtual bool RemoveItem(Item _removeItem)
+        public virtual bool RemoveItem(ItemData _removeItem)
         {
             // ToDo: Remove the item
-
-            mainInventory.UpdateSlots();
 
             // Item wasnt removed, so return false
             return false;
