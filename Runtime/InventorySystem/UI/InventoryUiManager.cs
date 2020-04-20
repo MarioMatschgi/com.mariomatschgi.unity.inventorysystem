@@ -7,18 +7,22 @@ namespace MM.Systems.InventorySystem
     [AddComponentMenu("MM InventorySystem/Inventory UI Manager")]
     public class InventoryUiManager : MonoBehaviour
     {
+        public ItemData testData;
         [Header("General")]
         public bool forceDisableInvSetup;
         public bool setupInteractorInventoriesDynamic = true;
         public int startInteractorInventories;
         [Space]
         public InventoryUiSlot firstSelectedSlot;
+        [Space]
+        public Vector2 itemDropForce = new Vector2(1, 2);
 
         [Header("Outlets")]
         public InventoryUiSlot cursorItemSlot;
 
         [Header("Prefabs")]
         public GameObject playerInventoryUiPrefab;
+        public GameObject emptyItemPrefab;
 
 
         public delegate void OnSlotSelectedEvent(InventoryUiSlot _selectedSlot, PointerEventData.InputButton _button);
@@ -210,6 +214,19 @@ namespace MM.Systems.InventorySystem
          *  Gameplay Methodes
          *
          */
+
+        public void DropItem(ItemData _itemData, IInteractor _interactor)
+        {
+            // Setup variables
+            GameObject _itemGo = Instantiate(emptyItemPrefab, new Vector3(1, 0, 0), Quaternion.identity);
+            Item _item = _itemGo.GetComponent<Item>();
+
+            // Setup
+            _item.itemData = _itemData;
+            _item.startAmount = _itemData.itemAmount;
+            _item.SetupDrop(_interactor);
+
+        }
 
         /// <summary>
         /// Swaps two Slots, first gets cached

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace MM.Systems.InventorySystem
 {
@@ -12,6 +13,11 @@ namespace MM.Systems.InventorySystem
         [Header("Item")]
         public ItemData itemData;
         public int startAmount;
+
+
+        Rigidbody2D rb;
+        float tmpYPos;
+        bool isDropping;
 
 
         #region Callback Methodes
@@ -43,6 +49,7 @@ namespace MM.Systems.InventorySystem
 
         void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
             itemData.itemAmount = startAmount;
         }
 
@@ -72,14 +79,31 @@ namespace MM.Systems.InventorySystem
         /// <returns>True if interaction was successful</returns>
         public override bool OnInteract(Transform _interactor)
         {
+            if (isDropping)
+                return false;
+
             base.OnInteract(_interactor);
 
-            // Try to collect Item if a player interacted with this Item
+            // Try to collect Item if a interactor interacted with this Item
             IInteractor _iInteractor = _interactor.GetComponent<IInteractor>();
             if (_iInteractor != null)
                 CollectItem(_iInteractor);
 
             return true;
+        }
+
+        public void SetupDrop(IInteractor _interactor)
+        {
+            tmpYPos = transform.position.y;
+            rb.velocity = Vector2.zero;
+            Vector2 _force = InventoryUiManager.instance.itemDropForce;
+            // Invert X if interactor is facing -X
+            if (((MonoBehaviour)_interactor).transform.forward.x < 0)
+                _force.x *= -1;
+
+            rb.AddForce(_force, ForceMode2D.Impulse);
+
+            StartCoroutine(SetupDropIE());
         }
 
         #endregion
@@ -91,6 +115,20 @@ namespace MM.Systems.InventorySystem
          * 
          */
 
+        IEnumerator SetupDropIE()
+        {
+            isDropping = true;
+            rb.gravityScale = 1;
+
+            yield return null;
+            while (transform.position.y > tmpYPos)
+                yield return null;
+
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            isDropping = false;
+        }
+
         /// <summary>
         /// Collects this Item
         /// </summary>
@@ -99,13 +137,6 @@ namespace MM.Systems.InventorySystem
         {
             if (logTryCollect)
                 Debug.Log("Try to collect item named: " + itemData.itemPreset.name);
-
-
-
-            Debug.Log("A: " + gameObject.name + " : " + (itemData.itemPreset is RingItemPreset));
-
-
-
 
             itemData.itemAmount = _iInteractor.inventoryUi.AddItem(itemData);
             if (itemData.itemAmount == 0)
