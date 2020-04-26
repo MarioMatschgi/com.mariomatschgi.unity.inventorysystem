@@ -218,7 +218,7 @@ namespace MM.Systems.InventorySystem
         public void DropItem(ItemData _itemData, IInteractor _interactor)
         {
             // Setup variables
-            GameObject _itemGo = Instantiate(emptyItemPrefab, new Vector3(1, 0, 0), Quaternion.identity);
+            GameObject _itemGo = Instantiate(emptyItemPrefab, ((MonoBehaviour)_interactor).transform.position, Quaternion.identity);
             Item _item = _itemGo.GetComponent<Item>();
 
             // Setup
