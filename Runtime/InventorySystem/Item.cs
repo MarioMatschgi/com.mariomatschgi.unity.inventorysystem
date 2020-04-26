@@ -16,6 +16,7 @@ namespace MM.Systems.InventorySystem
 
 
         Rigidbody2D rb;
+        float tmpXPos;
         float tmpYPos;
         bool isDropping;
 
@@ -95,6 +96,7 @@ namespace MM.Systems.InventorySystem
         public void SetupDrop(IInteractor _interactor)
         {
             tmpYPos = transform.position.y;
+            tmpXPos = transform.position.x;
             rb.velocity = Vector2.zero;
             Vector2 _force = InventoryUiManager.instance.itemDropForce;
             // Invert X if interactor is facing -X
@@ -120,8 +122,7 @@ namespace MM.Systems.InventorySystem
             isDropping = true;
             rb.gravityScale = 1;
 
-            yield return null;
-            while (transform.position.y > tmpYPos)
+            while (Mathf.Approximately(transform.position.y, tmpYPos) || transform.position.y >= tmpYPos)
                 yield return null;
 
             rb.velocity = Vector2.zero;
