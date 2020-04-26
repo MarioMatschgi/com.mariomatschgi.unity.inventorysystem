@@ -15,7 +15,7 @@ namespace MM.Systems.InventorySystem
         [Space]
         public InventoryUiSlot firstSelectedSlot;
         [Space]
-        public Vector2 itemDropForce = new Vector2(1, 2);
+        public Vector3 itemDropForce = new Vector3(1, 2, 0);
 
         [Header("Outlets")]
         public InventoryUiSlot cursorItemSlot;

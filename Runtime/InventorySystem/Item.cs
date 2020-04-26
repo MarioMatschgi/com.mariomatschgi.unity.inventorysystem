@@ -15,7 +15,10 @@ namespace MM.Systems.InventorySystem
         public int startAmount;
 
 
-        Rigidbody2D rb;
+        new Collider collider;
+        Rigidbody rb;
+        new Collider2D collider2D;
+        Rigidbody2D rb2D;
         float tmpXPos;
         float tmpYPos;
         bool isDropping;
@@ -50,7 +53,10 @@ namespace MM.Systems.InventorySystem
 
         void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            rb2D = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
+            collider2D = GetComponent<Collider2D>();
+            collider = GetComponent<Collider>();
             itemData.itemAmount = startAmount;
         }
 
@@ -95,16 +101,31 @@ namespace MM.Systems.InventorySystem
 
         public void SetupDrop(IInteractor _interactor)
         {
+            // Setup
+            if (collider2D != null)
+                collider2D.enabled = false;
+            if (collider != null)
+                collider.enabled = false;
+
             tmpYPos = transform.position.y;
             tmpXPos = transform.position.x;
-            rb.velocity = Vector2.zero;
-            Vector2 _force = InventoryUiManager.instance.itemDropForce;
+            if (rb2D != null)
+                rb2D.velocity = Vector2.zero;
+            if (rb != null)
+                rb.velocity = Vector3.zero;
+
+            Vector3 _force = InventoryUiManager.instance.itemDropForce;
             // Invert X if interactor is facing -X
             if (((MonoBehaviour)_interactor).transform.forward.x < 0)
                 _force.x *= -1;
 
-            rb.AddForce(_force, ForceMode2D.Impulse);
+            // Add force
+            if (rb2D != null)
+                rb2D.AddForce(_force, ForceMode2D.Impulse);
+            if (rb != null)
+                rb.AddForce(_force, ForceMode.Impulse);
 
+            // Start Corroutine
             StartCoroutine(SetupDropIE());
         }
 
@@ -120,14 +141,25 @@ namespace MM.Systems.InventorySystem
         IEnumerator SetupDropIE()
         {
             isDropping = true;
-            rb.gravityScale = 1;
+
+            if (rb2D != null)
+                rb2D.gravityScale = 1;
+            if (rb != null)
+                rb.useGravity = true;
 
             while (Mathf.Approximately(transform.position.y, tmpYPos) || transform.position.y >= tmpYPos)
                 yield return null;
 
-            rb.velocity = Vector2.zero;
-            rb.gravityScale = 0;
-            isDropping = false;
+            rb2D.velocity = Vector2.zero;
+            if (rb2D != null)
+                rb2D.gravityScale = 0;
+            if (rb != null)
+                rb.useGravity = false;
+
+            if (collider2D != null)
+                collider2D.enabled = true;
+            if (collider != null)
+                collider.enabled = true;
         }
 
         /// <summary>
