@@ -10,6 +10,8 @@ namespace MM.Systems.InventorySystem
         public new string name = "New Item preset";
         public string description = "This is a new Item preset";
         [Space]
+        public ItemType type = ItemType.Normal;
+        [Space]
         public Sprite sprite;
         public int stackSize = 10;
     }

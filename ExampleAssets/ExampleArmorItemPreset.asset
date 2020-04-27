@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: New Item preset
   description: This is a new Item preset
+  type: 1
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   stackSize: 1
   armorType: 0

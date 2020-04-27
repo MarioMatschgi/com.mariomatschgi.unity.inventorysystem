@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
+  acceptedTypes: 4
+  m_hoveringSlot: {fileID: 0}
   isActive: 0
   spaceX: 0
   spaceY: 0
@@ -240,15 +242,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a27ff11d25d43128430513c3be784d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
+  hoveringSlot: {fileID: 0}
   animationTime: 0.1
   isFinishedAnimating: 0
-  selectedRowIdx: 0
+  hotbarRowIdx: 0
+  inventorySpaceX: 10
+  inventorySpaceY: 3
+  armorSpaceX: 2
+  armorSpaceY: 3
+  ringSpaceX: 2
+  ringSpaceY: 3
   content: {fileID: 1886874582238942816}
   highlightPanel: {fileID: 612725166515651389}
   hotbarInventory: {fileID: 972462683605241541}
   mainInventory: {fileID: 4031479681746860523}
   armorInventory: {fileID: 4242936369413647515}
   ringInventory: {fileID: 6421562608003703719}
+  hasNotChangedInv: 0
 --- !u!1 &3998446066785012791
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +454,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
+  acceptedTypes: -1
+  m_hoveringSlot: {fileID: 0}
   isActive: 1
   spaceX: 0
   spaceY: 0
@@ -639,6 +652,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
+  acceptedTypes: 2
+  m_hoveringSlot: {fileID: 0}
   isActive: 0
   spaceX: 0
   spaceY: 0
@@ -936,6 +951,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
+  acceptedTypes: -1
+  m_hoveringSlot: {fileID: 0}
   isActive: 1
   spaceX: 0
   spaceY: 0

@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 1079013283194241914}
   - component: {fileID: 1079013283194241915}
   m_Layer: 5
-  m_Name: SlotsPanel
+  m_Name: InventoryUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1375,6 +1375,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
+  acceptedTypes: -1
+  m_hoveringSlot: {fileID: 0}
   isActive: 1
   spaceX: 0
   spaceY: 0

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MM.Systems.InventorySystem
 {
@@ -18,6 +16,13 @@ namespace MM.Systems.InventorySystem
          *  Callback Methodes
          * 
          */
+
+        void Reset()
+        {
+            // Set default values
+            type = ItemType.Armor;
+            stackSize = 1;
+        }
 
         #endregion
 
@@ -43,5 +48,9 @@ namespace MM.Systems.InventorySystem
     public enum ArmorType
     {
         None,
+        Helmet,
+        Chestplate,
+        Trousers,
+        Boots,
     }
 }

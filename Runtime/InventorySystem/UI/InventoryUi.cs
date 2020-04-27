@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using MM.Attributes;
 
 namespace MM.Systems.InventorySystem
 {
@@ -10,6 +11,9 @@ namespace MM.Systems.InventorySystem
         [Header("General")]
         public InventoryUiSlot[] slots;
         public ItemData[][] items;
+        [Space]
+        [MultiChoiceEnum]
+        public ItemType acceptedTypes;
         [Space]
         [SerializeField]
         InventoryUiSlot m_hoveringSlot;

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using MM.Extentions;
 
 namespace MM.Systems.InventorySystem
 {
@@ -242,9 +243,7 @@ namespace MM.Systems.InventorySystem
         /// <returns></returns>
         public bool CheckItemTypeValid(InventoryUi _inv, ItemData _newData)
         {
-
-
-            return false;
+            return (_inv.acceptedTypes.ReturnSelectedElements().Contains((int)_newData.itemPreset.type));
         }
 
         /// <summary>
