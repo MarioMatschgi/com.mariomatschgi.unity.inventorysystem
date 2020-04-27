@@ -8,7 +8,6 @@ namespace MM.Systems.InventorySystem
     [AddComponentMenu("MM InventorySystem/Inventory UI Manager")]
     public class InventoryUiManager : MonoBehaviour
     {
-        public ItemData testData;
         [Header("General")]
         public bool forceDisableInvSetup;
         public bool setupInteractorInventoriesDynamic = true;
@@ -20,6 +19,7 @@ namespace MM.Systems.InventorySystem
 
         [Header("Outlets")]
         public InventoryUiSlot cursorItemSlot;
+        public Transform itemsParent;
 
         [Header("Prefabs")]
         public GameObject playerInventoryUiPrefab;
@@ -227,7 +227,7 @@ namespace MM.Systems.InventorySystem
         public void DropItem(ItemData _itemData, IInteractor _interactor)
         {
             // Setup variables
-            GameObject _itemGo = Instantiate(emptyItemPrefab, ((MonoBehaviour)_interactor).transform.position, Quaternion.identity);
+            GameObject _itemGo = Instantiate(emptyItemPrefab, ((MonoBehaviour)_interactor).transform.position, Quaternion.identity, InventoryUiManager.instance.itemsParent);
             Item _item = _itemGo.GetComponent<Item>();
 
             // Setup
