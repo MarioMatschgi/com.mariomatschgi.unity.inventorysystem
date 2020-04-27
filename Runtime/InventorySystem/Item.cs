@@ -150,6 +150,8 @@ namespace MM.Systems.InventorySystem
             while (Mathf.Approximately(transform.position.y, tmpYPos) || transform.position.y >= tmpYPos)
                 yield return null;
 
+            isDropping = false;
+
             rb2D.velocity = Vector2.zero;
             if (rb2D != null)
                 rb2D.gravityScale = 0;

@@ -11,6 +11,19 @@ namespace MM.Systems.InventorySystem
         public InventoryUiSlot[] slots;
         public ItemData[][] items;
         [Space]
+        [SerializeField]
+        InventoryUiSlot m_hoveringSlot;
+        public InventoryUiSlot hoveringSlot
+        {
+            get { return m_hoveringSlot; }
+            set {
+                m_hoveringSlot = value;
+
+                if (interactorInv != null)
+                    interactorInv.hoveringSlot = m_hoveringSlot;
+            }
+        }
+        [Space]
         public bool isActive;
         [Space]
         public int spaceX;

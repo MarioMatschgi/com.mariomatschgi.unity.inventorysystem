@@ -57,6 +57,14 @@ namespace MM.Systems.InventorySystem
             // Update hotbar index
             if (Input.GetKeyDown(KeyCode.Tab))
                 inventoryUi.hotbarRowIdx++;
+
+            // Drop the cursor item if the mouse clicked outside the inventoryUi
+            if (Input.GetMouseButtonDown(0))
+                inventoryUi.DropIfMouseOutside();
+
+            // Try to drop item from the Slot the mouse hovers over
+            if (Input.GetKeyDown(KeyCode.R))
+                inventoryUi.TryDropHovered();
         }
 
         #endregion

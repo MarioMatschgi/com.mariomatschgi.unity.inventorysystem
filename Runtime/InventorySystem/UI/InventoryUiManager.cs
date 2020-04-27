@@ -118,38 +118,46 @@ namespace MM.Systems.InventorySystem
                         // If selected Slot is empty
                         if (_selectedSlot.itemData == null)
                         {
-                            // Put cursor item there
-                            cursorItemSlot.itemPos = _selectedSlot.itemPos;
-                            SwapSlotItems(_selectedSlot, cursorItemSlot);
-
-                            // Reset firstSelectedSlot
-                            firstSelectedSlot = null;
-
-                            // Reset cursor
-                            ResetCursor();
-                        }
-                        // Else 
-                        else
-                        {
-                            // If the selected slot is full, swap the items
-                            if (_selectedSlot.itemData.itemAmount >= _selectedSlot.itemData.itemPreset.stackSize)
+                            // Only move item if newItemData is allowed to be put in its new inventory
+                            if (CheckItemTypeValid(_selectedSlot.inventoryUi, cursorItemSlot.itemData))
                             {
                                 // Put cursor item there
                                 cursorItemSlot.itemPos = _selectedSlot.itemPos;
                                 SwapSlotItems(_selectedSlot, cursorItemSlot);
 
-                                // Set firstSelectedSlot and secondSelectedSlot
-                                firstSelectedSlot = _selectedSlot;
-                            }
-                            // Else, stack the items
-                            else
-                            {
-                                // Stack the items
-                                StackSlotItems(cursorItemSlot, _selectedSlot, cursorItemSlot.itemData.itemAmount);
+                                // Reset firstSelectedSlot
+                                firstSelectedSlot = null;
 
-                                // If cursor amount is 0, reset cursor
-                                if (cursorItemSlot.itemData == null || cursorItemSlot.itemData.itemAmount <= 0)
-                                    ResetCursor();
+                                // Reset cursor
+                                ResetCursor();
+                            }
+                        }
+                        // Else 
+                        else
+                        {
+                            // Only move if: CursorItem is allowed in the clicked inv AND selectedItem is allowed in the first selected inv
+                            if (CheckItemTypeValid(_selectedSlot.inventoryUi, cursorItemSlot.itemData) && CheckItemTypeValid(firstSelectedSlot.inventoryUi, _selectedSlot.itemData))
+                            {
+                                // If the selected slot is full, swap the items
+                                if (_selectedSlot.itemData.itemAmount >= _selectedSlot.itemData.itemPreset.stackSize)
+                                {
+                                    // Put cursor item there
+                                    cursorItemSlot.itemPos = _selectedSlot.itemPos;
+                                    SwapSlotItems(_selectedSlot, cursorItemSlot);
+
+                                    // Set firstSelectedSlot and secondSelectedSlot
+                                    firstSelectedSlot = _selectedSlot;
+                                }
+                                // Else, stack the items
+                                else
+                                {
+                                    // Stack the items
+                                    StackSlotItems(cursorItemSlot, _selectedSlot, cursorItemSlot.itemData.itemAmount);
+
+                                    // If cursor amount is 0, reset cursor
+                                    if (cursorItemSlot.itemData == null || cursorItemSlot.itemData.itemAmount <= 0)
+                                        ResetCursor();
+                                }
                             }
                         }
                     }
@@ -226,6 +234,28 @@ namespace MM.Systems.InventorySystem
             _item.startAmount = _itemData.itemAmount;
             _item.SetupDrop(_interactor);
 
+        }
+
+        /// <summary>
+        /// Checks if itemData can be placed in a InventoryUiSlot, returns true if
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckItemTypeValid(InventoryUi _inv, ItemData _newData)
+        {
+
+
+            return false;
+        }
+
+        /// <summary>
+        /// Resets the cursor Slot
+        /// </summary>
+        public void ResetCursor()
+        {
+            // Reset Cursor
+            cursorItemSlot.UpdateSlot(null);
+            // Reset firstSelectedSlot
+            firstSelectedSlot = null;
         }
 
         /// <summary>
@@ -331,17 +361,6 @@ namespace MM.Systems.InventorySystem
                 _invGO.gameObject.name = "PlayerInventoryPanel";
                 _invGO.transform.SetSiblingIndex(0);
             }
-        }
-
-        /// <summary>
-        /// Resets the cursor Slot
-        /// </summary>
-        void ResetCursor()
-        {
-            // Reset Cursor
-            cursorItemSlot.UpdateSlot(null);
-            // Reset firstSelectedSlot
-            firstSelectedSlot = null;
         }
 
         #endregion

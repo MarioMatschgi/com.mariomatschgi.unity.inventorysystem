@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 namespace MM.Systems.InventorySystem
 {
     [AddComponentMenu("MM InventorySystem/Inventory UI Slot")]
-    public class InventoryUiSlot : MonoBehaviour, IPointerClickHandler
+    public class InventoryUiSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [Header("General")]
         public ItemData itemData;
@@ -67,6 +67,24 @@ namespace MM.Systems.InventorySystem
             // Invoke slotSelectedCallback
             if (InventoryUiManager.instance.slotSelectedCallback != null)
                 InventoryUiManager.instance.slotSelectedCallback.Invoke(this, eventData.button);
+        }
+
+        /// <summary>
+        /// OnPointerEnter Callback for InventoryUiSlots
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            inventoryUi.hoveringSlot = this;
+        }
+
+        /// <summary>
+        /// OnPointerExit Callback for InventoryUiSlots
+        /// </summary>
+        /// <param name="eventData"></param>
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            inventoryUi.hoveringSlot = null;
         }
 
         void Update()

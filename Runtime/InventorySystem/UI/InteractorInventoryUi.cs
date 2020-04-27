@@ -14,6 +14,8 @@ namespace MM.Systems.InventorySystem
         public int playerId;
         public IInteractor player;
         [Space]
+        public InventoryUiSlot hoveringSlot;
+        [Space]
         bool m_isInventoryOpen;
         public bool isInventoryOpen
         {
@@ -150,6 +152,48 @@ namespace MM.Systems.InventorySystem
          *  
          */
 
+        public void TryDropHovered()
+        {
+            if (hoveringSlot != null && hoveringSlot.itemData != null && hoveringSlot.itemData.itemPreset != null)
+            {
+                // If Control/command key is pressed, drop full
+                if ( ((Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer) && Input.GetKey(KeyCode.LeftCommand)) ||
+                     ((Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer) && Input.GetKey(KeyCode.LeftControl)) )
+                {
+                    InventoryUiManager.instance.DropItem(hoveringSlot.itemData, player);
+
+                    hoveringSlot.UpdateSlot(null);
+                }
+                // Else only drop 1 Item
+                else
+                {
+                    // Only drop 1 Item
+                    ItemData _newData = new ItemData(hoveringSlot.itemData.itemPreset, 1);
+                    InventoryUiManager.instance.DropItem(_newData, player);
+
+                    // Update slot with 1 less
+                    _newData = new ItemData(hoveringSlot.itemData.itemPreset, hoveringSlot.itemData.itemAmount - 1);
+                    hoveringSlot.UpdateSlot(_newData);
+                }
+            }
+        }
+
+        public void DropIfMouseOutside()
+        {
+            if (content.gameObject.activeInHierarchy && !RectTransformUtility.RectangleContainsScreenPoint(content.gameObject.GetComponent<RectTransform>(), Input.mousePosition, Camera.current))
+                TryDropCursor();
+        }
+
+        public void TryDropCursor()
+        {
+            if (InventoryUiManager.instance.cursorItemSlot.itemData != null && InventoryUiManager.instance.cursorItemSlot.itemData.itemPreset != null)
+            {
+                InventoryUiManager.instance.DropItem(InventoryUiManager.instance.cursorItemSlot.itemData, player);
+
+                InventoryUiManager.instance.ResetCursor();
+            }
+        }
+
         /// <summary>
         /// Adds an item <paramref name="_newItemData"/> to the list
         /// </summary>
@@ -254,7 +298,11 @@ namespace MM.Systems.InventorySystem
             if (_shouldOpen)
                 StartCoroutine(OpenInventory());
             else
+            {
                 StartCoroutine(CloseInventory());
+
+                TryDropCursor();
+            }
         }
 
         #endregion
